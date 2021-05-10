@@ -31,7 +31,20 @@ export default function Scoreboard() {
     sortBy === "score" ? SortByScore : SortByName
   );
 
-  const incrementscore = () => {};
+  const incrementScore = (id: number) => {
+    console.log("incrementing", id);
+    const updatedPlayerArray = players.map((player) => {
+      if (player.id === id) {
+        return {
+          ...player,
+          score: player.score + 1,
+        };
+      } else {
+        return player;
+      }
+    });
+    setPlayers(updatedPlayerArray);
+  };
 
   return (
     <div className="Scoreboard">
@@ -42,7 +55,9 @@ export default function Scoreboard() {
             key={player.id}
             name={player.name}
             score={player.score}
-            incrementscore={incrementscore}
+            incrementscore={() => {
+              incrementScore(player.id);
+            }}
           />
         );
       })}
