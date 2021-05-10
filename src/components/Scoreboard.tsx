@@ -46,9 +46,32 @@ export default function Scoreboard() {
     setPlayers(updatedPlayerArray);
   };
 
+  const resetScore = () => {
+    const updatedPlayerArray = players.map((player) => {
+      player.score = 0;
+      return player;
+    });
+    setPlayers(updatedPlayerArray);
+  };
+
+  const randomizeScore = () => {
+    const updatedPlayerArray = players.map((player) => {
+      player.score = Math.floor(Math.random() * 101);
+      console.log(player.score);
+      return player;
+    });
+    setPlayers(updatedPlayerArray);
+  };
+
+  const addPlayer = (name: string) => {
+    setPlayers([...players, { id: players.length + 1, name: name, score: 0 }]);
+  };
+
   return (
     <div className="Scoreboard">
       <h1>Scoreboard</h1>
+      <button onClick={resetScore}>Reset</button>
+      <button onClick={randomizeScore}>Randomize</button>
       {playersSorted.map((player) => {
         return (
           <Player
@@ -73,7 +96,7 @@ export default function Scoreboard() {
           <option value="name">Sort by name</option>
         </select>
       </p>
-      <AddPlayerForm />
+      <AddPlayerForm addPlayer={addPlayer} />
     </div>
   );
 }
